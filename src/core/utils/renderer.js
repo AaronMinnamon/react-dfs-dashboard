@@ -31,7 +31,7 @@ const getComponent = (componentReference) => {
 };
 
 const RootComponent = getComponent("root");
-const Loader  = getComponent("loader");
+const Loader = getComponent("loader");
 const NotFoundPage = getComponent("error/404");
 const ErrorPage = getComponent("error/500");
 const OfflinePage = getComponent("error/offline");
@@ -49,7 +49,7 @@ export const renderNotFoundPage = ({
   routes,
   renderRoot = null
 }, callback = () => null) => {
-  
+
   let component = (
     <Provider store={store}>
       <ConnectedRouter
@@ -67,7 +67,7 @@ export const renderNotFoundPage = ({
           </Switch>
         </RootComponent>
       </ConnectedRouter>
-    
+
     </Provider>
   );
   // If render is set false explicitly then just return the component
@@ -91,7 +91,7 @@ export const renderErrorPage = ({
   renderRoot = null,
   error
 }, callback = () => null) => {
-  
+
   context = context || {};
   let component = (
     <HotAppContainer>
@@ -114,7 +114,7 @@ export const renderErrorPage = ({
       </Provider>
     </HotAppContainer>
   );
-  
+
   if (!render) {
     return component;
   }
@@ -135,7 +135,7 @@ export const renderOfflinePage = ({
   renderRoot = null,
   error
 }, callback = () => null) => {
-  
+
   context = context || {};
   let component = (
     <HotAppContainer>
@@ -158,7 +158,7 @@ export const renderOfflinePage = ({
       </Provider>
     </HotAppContainer>
   );
-  
+
   if (!render) {
     return component;
   }
@@ -179,11 +179,11 @@ export const renderRoutesByUrl = ({
   store,
   renderRoot = null
 }, callback = () => null) => {
-  const currentRoutes = url ? getRouteFromPath(url, routes): routes;
-  
+  const currentRoutes = url ? getRouteFromPath(url, routes) : routes;
+
   context.api = api;
   context.storage = storage;
-  
+
   let component = (
     <HotAppContainer>
       <Provider store={store}>
@@ -257,11 +257,11 @@ export const getPreloadDataPromises = (
 ) => {
   let promises = [];
   _.each(routes, r => {
-    
+
     // Load data and add it to route itself
     if (r.preLoadData) {
       promises.push((() => {
-        
+
         // Pass route as reference so that we can modify it while loading data
         const staticRoute = JSON.parse(JSON.stringify(r));
         let returnData = r.preLoadData({
@@ -272,7 +272,7 @@ export const getPreloadDataPromises = (
           store,
           url,
           host,
-          updateSeo: function(seoData = {}) {
+          updateSeo: function (seoData = {}) {
             return r.seo = _.defaults({}, _.get(r, "seo", {}), seoData);
           }
         });

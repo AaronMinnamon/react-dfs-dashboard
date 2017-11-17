@@ -1,5 +1,6 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { routerReducer, routerMiddleware } from "react-router-redux";
+import thunk from 'redux-thunk';
 import * as coreReducers from "./reducers";
 
 const createReducer = (reducers = {}) => {
@@ -23,7 +24,7 @@ export default function configureStore({
 }) {
   // Add history middleware
   const historyMiddleware = routerMiddleware(history);
-  middleware.push(historyMiddleware);
+  middleware.push(historyMiddleware,thunk);
   
   const store = createStore(createReducer(reducers), initialState, composeEnhancers(applyMiddleware(...middleware)));
   store.asyncReducers = reducers;
