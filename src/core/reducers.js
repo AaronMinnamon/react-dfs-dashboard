@@ -1,32 +1,32 @@
 export * from "./components/screen/reducer";
 export * from "./libs/network/reducer";
 
-export function itemsHasErrored(state = false, action) {
-    switch (action.type) {
-        case 'ITEMS_HAS_ERRORED':
-            return action.hasErrored;
+export function teamsHasErrored(state = false, action) {
+  switch (action.type) {
+    case "TEAMS_HAS_ERRORED":
+      return action.hasErrored;
 
-        default:
-            return state;
-    }
+    default:
+      return state;
+  }
 }
 
-export function itemsIsLoading(state = false, action) {
-    switch (action.type) {
-        case 'ITEMS_IS_LOADING':
-            return action.isLoading;
+export function teamsIsLoading(state = false, action) {
+  switch (action.type) {
+    case "TEAMS_IS_LOADING":
+      return action.isLoading;
 
-        default:
-            return state;
-    }
+    default:
+      return state;
+  }
 }
 
-export function items(state = [], action) {
-    switch (action.type) {
-        case 'ITEMS_FETCH_DATA_SUCCESS':
-            return action.items;
+export function teams(state = [], action) {
+  switch (action.type) {
+    case "TEAMS_FETCH_DATA_SUCCESS":
+      return action.teams;
 
-        default:
-            return state;
-    }
+    default:
+      return state;
+  }
 }

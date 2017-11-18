@@ -2,6 +2,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import { hydrate as DefaultRender } from "react-dom";
 import { AppContainer as HotAppContainer } from "react-hot-loader";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import _ from "lodash";
 
 import ConnectedRouter from "../libs/ConnectedRouter";
@@ -186,33 +187,35 @@ export const renderRoutesByUrl = ({
 
   let component = (
     <HotAppContainer>
-      <Provider store={store}>
-        <ConnectedRouter
-          context={context}
-          location={url}
-          history={history}
-          Router={Router}
-        >
-          <RootComponent
-            api={api}
-            storage={storage}
-            routes={routes}
+      <MuiThemeProvider>
+        <Provider store={store}>
+          <ConnectedRouter
+            context={context}
+            location={url}
+            history={history}
+            Router={Router}
           >
-            <Loader>
-              <Switch>
-                {_.map(currentRoutes, (route, i) => {
-                  return <RouteWithSubRoutes
-                    key={i}
-                    route={route}
-                    storage={storage}
-                    api={api}
-                  />;
-                })}
-              </Switch>
-            </Loader>
-          </RootComponent>
-        </ConnectedRouter>
-      </Provider>
+            <RootComponent
+              api={api}
+              storage={storage}
+              routes={routes}
+            >
+              <Loader>
+                <Switch>
+                  {_.map(currentRoutes, (route, i) => {
+                    return <RouteWithSubRoutes
+                      key={i}
+                      route={route}
+                      storage={storage}
+                      api={api}
+                    />;
+                  })}
+                </Switch>
+              </Loader>
+            </RootComponent>
+          </ConnectedRouter>
+        </Provider>
+      </MuiThemeProvider>
     </HotAppContainer>
   );
   if (!render) {

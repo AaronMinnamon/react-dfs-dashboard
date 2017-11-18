@@ -1,6 +1,6 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { routerReducer, routerMiddleware } from "react-router-redux";
-import thunk from 'redux-thunk';
+import thunk from "redux-thunk";
 import * as coreReducers from "./reducers";
 
 const createReducer = (reducers = {}) => {

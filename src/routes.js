@@ -1,8 +1,8 @@
 import { configureRoutes } from "./core/utils/bundler";
 
 // routes
-import * as Home from "./pages/home";
+import * as Teams from "./pages/teams";
 
 export default configureRoutes([
-  Home
+  Teams
 ]);
