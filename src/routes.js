@@ -3,8 +3,10 @@ import { configureRoutes } from "./core/utils/bundler";
 // routes
 import * as Teams from "./pages/teams";
 import * as Home from "./pages/home";
+import * as Matchups from "./pages/matchups";
 
 export default configureRoutes([
   Home,
-  Teams
+  Teams,
+  Matchups
 ]);

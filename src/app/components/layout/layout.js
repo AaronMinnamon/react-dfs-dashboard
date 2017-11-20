@@ -48,12 +48,11 @@ class Layout extends Component {
               <MenuIcon />
             </IconButton>
             <Typography type="title" color="inherit" className={classes.flex}>
-              Title
+              AnaLITics
             </Typography>
           </Toolbar>
         </AppBar>
-        {this.props.children}
-      
+        { this.props.children }
       </MuiThemeProvider>
     );
   }

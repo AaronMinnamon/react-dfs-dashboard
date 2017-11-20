@@ -113,6 +113,7 @@
     "material-ui": "^1.0.0-beta.21",
     "material-ui-icons": "^1.0.0-beta.17",
     "opencollective": "^1.0.3",
+    "recompose": "^0.26.0",
     "redux-thunk": "^2.2.0",
     "typeface-roboto": "0.0.45",
     "whatwg-fetch": "^2.0.3"
