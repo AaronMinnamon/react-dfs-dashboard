@@ -2,7 +2,6 @@ import React from "react";
 import { Provider } from "react-redux";
 import { hydrate as DefaultRender } from "react-dom";
 import { AppContainer as HotAppContainer } from "react-hot-loader";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import _ from "lodash";
 
 import ConnectedRouter from "../libs/ConnectedRouter";
@@ -68,7 +67,6 @@ export const renderNotFoundPage = ({
           </Switch>
         </RootComponent>
       </ConnectedRouter>
-
     </Provider>
   );
   // If render is set false explicitly then just return the component
@@ -167,6 +165,7 @@ export const renderOfflinePage = ({
   return render(component, renderRoot, callback);
 };
 
+
 export const renderRoutesByUrl = ({
   render = DefaultRender,
   Router = DefaultRouter,
@@ -187,35 +186,33 @@ export const renderRoutesByUrl = ({
 
   let component = (
     <HotAppContainer>
-      <MuiThemeProvider>
-        <Provider store={store}>
-          <ConnectedRouter
-            context={context}
-            location={url}
-            history={history}
-            Router={Router}
+      <Provider store={store}>
+        <ConnectedRouter
+          context={context}
+          location={url}
+          history={history}
+          Router={Router}
+        >
+          <RootComponent
+            api={api}
+            storage={storage}
+            routes={routes}
           >
-            <RootComponent
-              api={api}
-              storage={storage}
-              routes={routes}
-            >
-              <Loader>
-                <Switch>
-                  {_.map(currentRoutes, (route, i) => {
-                    return <RouteWithSubRoutes
-                      key={i}
-                      route={route}
-                      storage={storage}
-                      api={api}
-                    />;
-                  })}
-                </Switch>
-              </Loader>
-            </RootComponent>
-          </ConnectedRouter>
-        </Provider>
-      </MuiThemeProvider>
+            <Loader>
+              <Switch>
+                {_.map(currentRoutes, (route, i) => {
+                  return <RouteWithSubRoutes
+                    key={i}
+                    route={route}
+                    storage={storage}
+                    api={api}
+                  />;
+                })}
+              </Switch>
+            </Loader>
+          </RootComponent>
+        </ConnectedRouter>
+      </Provider>
     </HotAppContainer>
   );
   if (!render) {

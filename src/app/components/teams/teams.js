@@ -1,14 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { teamsFetchData } from "../../actions/teamActions";
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
-} from "material-ui/Table";
+import Table, { TableBody, TableCell, TableHead, TableRow } from "material-ui/Table";
+import { CircularProgress } from "material-ui/Progress";
 
 class Teams extends Component {
   componentDidMount() {
@@ -21,26 +15,38 @@ class Teams extends Component {
     }
 
     if (this.props.isLoading) {
-      return <p>Loading…</p>;
+      return <CircularProgress size={60} thickness={7} />;
     }
 
     return (
       <Table>
-        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+        <TableHead>
           <TableRow>
-            <TableHeaderColumn>Rank</TableHeaderColumn>
-            <TableHeaderColumn>City</TableHeaderColumn>
-            <TableHeaderColumn>Name</TableHeaderColumn>
-            <TableHeaderColumn>Abbreviation</TableHeaderColumn>
+            <TableCell>Rank</TableCell>
+            <TableCell>City</TableCell>
+            <TableCell>Name</TableCell>
+            <TableCell>Abbreviation</TableCell>
+            <TableCell>Games Played</TableCell>
+            <TableCell>Wins</TableCell>
+            <TableCell>Losses</TableCell>
+            <TableCell>GF</TableCell>
+            <TableCell>GA</TableCell>
+            <TableCell>Points</TableCell>
           </TableRow>
-        </TableHeader>
-        <TableBody displayRowCheckbox={false}>
+        </TableHead>
+        <TableBody>
           {this.props.teams.map((item) => (
             <TableRow key={item.team.ID}>
-              <TableRowColumn>{item.rank}</TableRowColumn>
-              <TableRowColumn>{item.team.City}</TableRowColumn>
-              <TableRowColumn>{item.team.Name}</TableRowColumn>
-              <TableRowColumn>{item.team.Abbreviation}</TableRowColumn>
+              <TableCell>{item.rank}</TableCell>
+              <TableCell>{item.team.City}</TableCell>
+              <TableCell>{item.team.Name}</TableCell>
+              <TableCell>{item.team.Abbreviation}</TableCell>
+              <TableCell>{item.stats.GamesPlayed["#text"]}</TableCell>
+              <TableCell>{item.stats.stats.Wins["#text"]}</TableCell>
+              <TableCell>{item.stats.stats.Losses["#text"]}</TableCell>
+              <TableCell>{item.stats.stats.GoalsFor["#text"]}</TableCell>
+              <TableCell>{item.stats.stats.GoalsAgainst["#text"]}</TableCell>
+              <TableCell>{item.stats.stats.Points["#text"]}</TableCell>
             </TableRow>
           ))}
         </TableBody>
