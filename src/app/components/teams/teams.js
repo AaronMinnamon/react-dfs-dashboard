@@ -1,56 +1,133 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { compose } from "recompose";
+import PropTypes from "prop-types";
+import { withStyles } from "material-ui/styles";
 import { teamsFetchData } from "../../actions/teamActions";
-import Table, { TableBody, TableCell, TableHead, TableRow } from "material-ui/Table";
-import { CircularProgress } from "material-ui/Progress";
+import { LinearProgress } from "material-ui/Progress";
+import {
+  SortingState, SelectionState, FilteringState, GroupingState,
+  LocalFiltering, LocalGrouping, LocalSorting,
+} from "@devexpress/dx-react-grid";
+import {
+  Grid,
+  VirtualTableView, TableHeaderRow, TableFilterRow, TableSelection, TableGroupRow,
+  GroupingPanel, DragDropContext, TableColumnReordering,
+} from "@devexpress/dx-react-grid-material-ui";
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    marginTop: theme.spacing.unit * 2,
+  }
+});
+
+const getRowId = row => row.rank;
 
 class Teams extends Component {
+
   componentDidMount() {
     this.props.fetchTeams("https://api.mysportsfeeds.com/v1.1/pull/nhl/2017-2018-regular/overall_team_standings.json?teamstats=W,L,GF,GA,Pts");
   }
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      columns: [
+        {
+          name: "rank",
+          title: "Rank",
+          getCellValue: row => (parseInt(row.rank) ? parseInt(row.rank) : undefined)
+        },
+        {
+          name: "city",
+          title: "City",
+          getCellValue: row => (row.team.City ? row.team.City : undefined),
+        },
+        {
+          name: "name",
+          title: "Name",
+          getCellValue: row => (row.team.Name ? row.team.Name : undefined),
+        },
+        {
+          name: "wins",
+          title: "Wins",
+          getCellValue: row => (parseInt(row.stats.stats.Wins["#text"]) ? parseInt(row.stats.stats.Wins["#text"]) : undefined)
+        },
+        {
+          name: "losses",
+          title: "Losses",
+          getCellValue: row => (parseInt(row.stats.stats.Losses["#text"]) ? parseInt(row.stats.stats.Losses["#text"]) : undefined)
+        },
+        {
+          name: "gamesPlayed",
+          title: "GP",
+          getCellValue: row => (parseInt(row.stats.GamesPlayed["#text"]) ? parseInt(row.stats.GamesPlayed["#text"]) : undefined)
+        },
+        {
+          name: "goalsFor",
+          title: "GF",
+          getCellValue: row => (parseInt(row.stats.stats.GoalsFor["#text"]) ? parseInt(row.stats.stats.GoalsFor["#text"]) : undefined)
+        },
+        {
+          name: "goalsAgainst",
+          title: "GA",
+          getCellValue: row => (parseInt(row.stats.stats.GoalsAgainst["#text"]) ? parseInt(row.stats.stats.GoalsAgainst["#text"]) : undefined)
+        },
+        {
+          name: "points",
+          title: "Points",
+          getCellValue: row => (parseInt(row.stats.stats.Points["#text"]) ? parseInt(row.stats.stats.Points["#text"]) : undefined)
+        },
+      ],
+      rows: this.props.teams,
+    };
+  }
+
   render() {
+
+    const { columns } = this.state;
+
+
     if (this.props.hasErrored) {
       return <p>Sorry! There was an error loading the items</p>;
     }
 
     if (this.props.isLoading) {
-      return <CircularProgress size={60} thickness={7} />;
+      return <LinearProgress color="accent" />;
     }
 
-    return (
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Rank</TableCell>
-            <TableCell>City</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Abbreviation</TableCell>
-            <TableCell>Games Played</TableCell>
-            <TableCell>Wins</TableCell>
-            <TableCell>Losses</TableCell>
-            <TableCell>GF</TableCell>
-            <TableCell>GA</TableCell>
-            <TableCell>Points</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {this.props.teams.map((item) => (
-            <TableRow key={item.team.ID}>
-              <TableCell>{item.rank}</TableCell>
-              <TableCell>{item.team.City}</TableCell>
-              <TableCell>{item.team.Name}</TableCell>
-              <TableCell>{item.team.Abbreviation}</TableCell>
-              <TableCell>{item.stats.GamesPlayed["#text"]}</TableCell>
-              <TableCell>{item.stats.stats.Wins["#text"]}</TableCell>
-              <TableCell>{item.stats.stats.Losses["#text"]}</TableCell>
-              <TableCell>{item.stats.stats.GoalsFor["#text"]}</TableCell>
-              <TableCell>{item.stats.stats.GoalsAgainst["#text"]}</TableCell>
-              <TableCell>{item.stats.stats.Points["#text"]}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+    return ( <Grid
+      rows={this.props.teams}
+      columns={columns}
+      getRowId={getRowId}
+    >
+      <DragDropContext />
+
+      <FilteringState
+        defaultFilters={[{ columnName: "name", value: "" }]}
+      />
+      <SortingState
+        defaultSorting={[
+          { columnName: "rank", direction: "asc" },
+        ]}
+      />
+
+      <LocalFiltering />
+      <LocalSorting />
+
+      <SelectionState />
+
+      <VirtualTableView
+        tableCellTemplate={this.tableCellTemplate}
+      />
+      <TableHeaderRow allowSorting allowDragging />
+      <TableColumnReordering defaultOrder={columns.map(column => column.name)} />
+      <TableFilterRow />
+      <TableSelection />
+
+    </Grid>
     );
   }
 }
@@ -69,4 +146,12 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Teams);
+Teams.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps, mapDispatchToProps)
+)(Teams);
