@@ -29,8 +29,8 @@ export default {
     "description": "Boilerplate for react, redux with server-side rendering for SEO and support for progressive web application"
   },
   seo: {
-    title: "Common Title",
-    site_name: "My Site Name",
+    title: "AnaLITics",
+    site_name: "DFS Dashboard",
     description: "This is some temporary description, used if no other description is found",
     twitter: {
       site: "@atyantik_tech",

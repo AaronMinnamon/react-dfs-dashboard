@@ -12,17 +12,24 @@ import Typography from "material-ui/Typography";
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    marginTop: theme.spacing.unit * 2,
+    margin: theme.spacing.unit * 2,
   }
 });
 
 class Matchups extends Component {
   componentDidMount() {
-    this.props.fetchMatchups("https://api.mysportsfeeds.com/v1.1/pull/nhl/2017-2018-regular/daily_game_schedule.json?fordate=20171102");
+    this.props.fetchMatchups("https://api.mysportsfeeds.com/v1.1/pull/nhl/2017-2018-regular/daily_game_schedule.json?fordate=20171121");
   }
+  state = {
+    direction: "row",
+    justify: "center",
+    alignItems: "center",
+  };
+
 
   render() {
     const { classes } = this.props;
+    const { alignItems, direction, justify } = this.state;
 
     if (this.props.hasErrored) {
       return <p>Sorry! There was an error loading the items</p>;
@@ -34,7 +41,7 @@ class Matchups extends Component {
 
     return (
       <div className={classes.root}>
-        <Grid container spacing={8}>
+        <Grid container alignItems={alignItems} justify={justify} spacing={8}>
           {this.props.matchups.map((match) => (
             <Grid item xs={6} sm={2} key={match.id}>
               <Card className={classes.card}>
