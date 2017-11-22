@@ -1,9 +1,12 @@
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "recompose";
 import PropTypes from "prop-types";
 import { withStyles } from "material-ui/styles";
-import { teamsFetchData } from "../../actions/teamActions";
+import { TableCell } from "material-ui";
+import { teamsFetchData, selectTeam } from "../../actions/teamActions";
+import TeamLink from "../links/TeamLink";
 import { LinearProgress } from "material-ui/Progress";
 import {
   SortingState, SelectionState, FilteringState, GroupingState,
@@ -83,7 +86,19 @@ class Teams extends Component {
       ],
       rows: this.props.teams,
     };
+
+    this.tableCellTemplate = ({ value, row, column }) => {
+      if(column.name === "city"){
+        return <TableCell >
+          <TeamLink clickTeam={this.props.clickTeam} row={row} value={value}></TeamLink>
+        </TableCell>;
+      }
+      return undefined;
+    };
+
   }
+
+
 
   render() {
 
@@ -98,36 +113,37 @@ class Teams extends Component {
       return <LinearProgress color="accent" />;
     }
 
-    return ( <Grid
-      rows={this.props.teams}
-      columns={columns}
-      getRowId={getRowId}
-    >
-      <DragDropContext />
+    return ( 
+      <Grid
+        rows={this.props.teams}
+        columns={columns}
+        getRowId={getRowId}
+      >
+        <DragDropContext />
 
-      <FilteringState
-        defaultFilters={[{ columnName: "name", value: "" }]}
-      />
-      <SortingState
-        defaultSorting={[
-          { columnName: "rank", direction: "asc" },
-        ]}
-      />
+        <FilteringState
+          defaultFilters={[{ columnName: "name", value: "" }]}
+        />
+        <SortingState
+          defaultSorting={[
+            { columnName: "rank", direction: "asc" },
+          ]}
+        />
 
-      <LocalFiltering />
-      <LocalSorting />
+        <LocalFiltering />
+        <LocalSorting />
 
-      <SelectionState />
+        <SelectionState />
 
-      <VirtualTableView
-        tableCellTemplate={this.tableCellTemplate}
-      />
-      <TableHeaderRow allowSorting allowDragging />
-      <TableColumnReordering defaultOrder={columns.map(column => column.name)} />
-      <TableFilterRow />
-      <TableSelection />
+        <VirtualTableView
+          tableCellTemplate={this.tableCellTemplate}
+        />
+        <TableHeaderRow allowSorting allowDragging />
+        <TableColumnReordering defaultOrder={columns.map(column => column.name)} />
+        <TableFilterRow />
+        <TableSelection />
 
-    </Grid>
+      </Grid>
     );
   }
 }
@@ -142,7 +158,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchTeams: (url) => dispatch(teamsFetchData(url))
+    fetchTeams: (url) => dispatch(teamsFetchData(url)),
+    clickTeam: (teamAbbreviation) => dispatch(selectTeam(teamAbbreviation))
   };
 };
 
