@@ -53,7 +53,7 @@ class Players extends Component {
         {
           name: "age",
           title: "Age",
-          getCellValue: row => (parseInt(row.player.Age) ? row.player.Age : undefined)
+          getCellValue: row => (row.player.Age ? parseInt(row.player.Age) : undefined)
         },
         {
           name: "position",

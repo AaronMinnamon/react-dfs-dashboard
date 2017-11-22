@@ -38,7 +38,7 @@ class Teams extends Component {
         {
           name: "rank",
           title: "Rank",
-          getCellValue: row => (parseInt(row.rank) ? parseInt(row.rank) : undefined)
+          getCellValue: row => (row.rank ? parseInt(row.rank) : undefined)
         },
         {
           name: "city",
@@ -53,32 +53,32 @@ class Teams extends Component {
         {
           name: "wins",
           title: "Wins",
-          getCellValue: row => (parseInt(row.stats.stats.Wins["#text"]) ? parseInt(row.stats.stats.Wins["#text"]) : undefined)
+          getCellValue: row => (row.stats.stats.Wins["#text"] ? parseInt(row.stats.stats.Wins["#text"]) : undefined)
         },
         {
           name: "losses",
           title: "Losses",
-          getCellValue: row => (parseInt(row.stats.stats.Losses["#text"]) ? parseInt(row.stats.stats.Losses["#text"]) : undefined)
+          getCellValue: row => (row.stats.stats.Losses["#text"] ? parseInt(row.stats.stats.Losses["#text"]) : undefined)
         },
         {
           name: "gamesPlayed",
           title: "GP",
-          getCellValue: row => (parseInt(row.stats.GamesPlayed["#text"]) ? parseInt(row.stats.GamesPlayed["#text"]) : undefined)
+          getCellValue: row => (row.stats.GamesPlayed["#text"] ? parseInt(row.stats.GamesPlayed["#text"]) : undefined)
         },
         {
           name: "goalsFor",
           title: "GF",
-          getCellValue: row => (parseInt(row.stats.stats.GoalsFor["#text"]) ? parseInt(row.stats.stats.GoalsFor["#text"]) : undefined)
+          getCellValue: row => (row.stats.stats.GoalsFor["#text"] ? parseInt(row.stats.stats.GoalsFor["#text"]) : undefined)
         },
         {
           name: "goalsAgainst",
           title: "GA",
-          getCellValue: row => (parseInt(row.stats.stats.GoalsAgainst["#text"]) ? parseInt(row.stats.stats.GoalsAgainst["#text"]) : undefined)
+          getCellValue: row => (row.stats.stats.GoalsAgainst["#text"] ? parseInt(row.stats.stats.GoalsAgainst["#text"]) : undefined)
         },
         {
           name: "points",
           title: "Points",
-          getCellValue: row => (parseInt(row.stats.stats.Points["#text"]) ? parseInt(row.stats.stats.Points["#text"]) : undefined)
+          getCellValue: row => (row.stats.stats.Points["#text"] ? parseInt(row.stats.stats.Points["#text"]) : undefined)
         },
       ],
       rows: this.props.teams,
