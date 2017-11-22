@@ -1,12 +1,5 @@
 import { apiConfig } from "../../core/api_auth";
 
-export function selectTeam(team) {
-  return {
-    type: "SELECT_TEAM",
-    team
-  };
-}
-
 export function teamsHasErrored(bool) {
   return {
     type: "TEAMS_HAS_ERRORED",
@@ -52,6 +45,13 @@ export function teamsFetchData(url) {
   };
 }
 
+export function selectTeam(team) {
+  return {
+    type: "SELECT_TEAM",
+    team
+  };
+}
+
 export function teamHasErrored(bool) {
   return {
     type: "TEAM_HAS_ERRORED",
@@ -83,11 +83,11 @@ export function errorAfterFiveSeconds() {
   };
 }
 
-export function teamFetchData(url) {
+export function teamFetchData(baseUrl,teamAbbr) {
   return (dispatch) => {
     dispatch(teamIsLoading(true));
 
-    fetch(url, {
+    fetch(baseUrl + teamAbbr, {
       headers: {
         "Content-Type": "text/plain",
         "Authorization": "Basic " + btoa(apiConfig.username + ":" + apiConfig.password),

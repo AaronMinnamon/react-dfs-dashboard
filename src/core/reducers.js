@@ -1,16 +1,6 @@
 export * from "./components/screen/reducer";
 export * from "./libs/network/reducer";
 
-export function selectedTeam(state = null, action) {
-  switch (action.type) {
-    case "SELECT_TEAM":
-      return action.team;
-
-    default:
-      return state;
-  }
-}
-
 export function teamsHasErrored(state = false, action) {
   switch (action.type) {
     case "TEAMS_HAS_ERRORED":
@@ -105,6 +95,17 @@ export function teamHasErrored(state = false, action) {
   switch (action.type) {
     case "TEAM_HAS_ERRORED":
       return action.hasErrored;
+
+    default:
+      return state;
+  }
+}
+
+
+export function selectedTeam(state = null, action) {
+  switch (action.type) {
+    case "SELECT_TEAM":
+      return action.team;
 
     default:
       return state;

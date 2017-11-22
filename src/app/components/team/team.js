@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import { withStyles } from "material-ui/styles";
 import { TableCell } from "material-ui";
 import { teamFetchData } from "../../actions/teamActions";
-import TeamLink from "../links/TeamLink";
 import { LinearProgress } from "material-ui/Progress";
 import {
   SortingState, SelectionState, FilteringState, GroupingState,
@@ -28,8 +27,12 @@ const styles = theme => ({
 
 class Team extends Component {
 
+  constructor(props) {
+    super(props);
+  }
+
   componentDidMount() {
-    this.props.fetchTeam("https://api.mysportsfeeds.com/v1.1/pull/nhl/2017-2018-regular/team_gamelogs.json?team=BOS");
+    this.props.fetchTeam("https://api.mysportsfeeds.com/v1.1/pull/nhl/2017-2018-regular/team_gamelogs.json?team=",this.props.selectedTeam);
   }
 
 
@@ -53,6 +56,7 @@ class Team extends Component {
 const mapStateToProps = (state) => {
   return {
     team: state.team,
+    selectedTeam: state.selectedTeam,
     hasErrored: state.teamHasErrored,
     isLoading: state.teamIsLoading
   };
@@ -60,7 +64,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchTeam: (url) => dispatch(teamFetchData(url))
+    fetchTeam: (url,teamAbbr) => dispatch(teamFetchData(url,teamAbbr))
   };
 };
 
