@@ -8,6 +8,7 @@ import { withStyles } from "material-ui/styles";
 import Card, {  CardContent } from "material-ui/Card";
 import Grid from "material-ui/Grid";
 import Typography from "material-ui/Typography";
+import { getDate } from "../../../core/helpers";
 
 const styles = theme => ({
   root: {
@@ -16,9 +17,16 @@ const styles = theme => ({
   }
 });
 
+
 class Matchups extends Component {
+
+  constructor() {
+    super();
+
+  }
+
   componentDidMount() {
-    this.props.fetchMatchups("https://api.mysportsfeeds.com/v1.1/pull/nhl/2017-2018-regular/daily_game_schedule.json?fordate=20171121");
+    this.props.fetchMatchups(`https://api.mysportsfeeds.com/v1.1/pull/nhl/2017-2018-regular/daily_game_schedule.json?fordate=${getDate()}`);
   }
   state = {
     direction: "row",

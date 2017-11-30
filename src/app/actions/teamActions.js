@@ -39,9 +39,13 @@ export function teamsFetchData(url) {
         dispatch(teamsIsLoading(false));
         return response;
       })
-      .then((response) => response.json())
-      .then((items) => dispatch(teamsFetchDataSuccess(items.overallteamstandings.teamstandingsentry)))
-      .catch(() => dispatch(teamsHasErrored(true)));
+      .then(
+        (response) => response.json()
+      )
+      .then(
+        (items) => dispatch(teamsFetchDataSuccess(items.overallteamstandings.teamstandingsentry)),
+        (error) => dispatch(teamsHasErrored(true, error))
+      );
   };
 }
 
@@ -101,8 +105,12 @@ export function teamFetchData(baseUrl,teamAbbr) {
         dispatch(teamIsLoading(false));
         return response;
       })
-      .then((response) => response.json())
-      .then((items) => dispatch(teamFetchDataSuccess(items)))
-      .catch(() => dispatch(teamHasErrored(true)));
+      .then(
+        (response) => response.json()
+      )
+      .then(
+        (items) => dispatch(teamFetchDataSuccess(items)),
+        (error) => dispatch(teamsHasErrored(true, error))
+      );
   };
 }

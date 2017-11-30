@@ -4,18 +4,8 @@ import { connect } from "react-redux";
 import { compose } from "recompose";
 import PropTypes from "prop-types";
 import { withStyles } from "material-ui/styles";
-import { TableCell } from "material-ui";
 import { teamFetchData } from "../../actions/teamActions";
 import { LinearProgress } from "material-ui/Progress";
-import {
-  SortingState, SelectionState, FilteringState, GroupingState,
-  LocalFiltering, LocalGrouping, LocalSorting,
-} from "@devexpress/dx-react-grid";
-import {
-  Grid,
-  VirtualTableView, TableHeaderRow, TableFilterRow, TableSelection, TableGroupRow,
-  GroupingPanel, DragDropContext, TableColumnReordering,
-} from "@devexpress/dx-react-grid-material-ui";
 
 const styles = theme => ({
   root: {
