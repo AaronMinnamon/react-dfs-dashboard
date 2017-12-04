@@ -1,4 +1,5 @@
 import { apiConfig } from "../../core/api_auth";
+import { processData } from "../../core/helpers"; 
 
 export function teamsHasErrored(bool) {
   return {
@@ -70,10 +71,10 @@ export function teamIsLoading(bool) {
   };
 }
 
-export function teamFetchDataSuccess(team) {
+export function teamFetchDataSuccess(teamGameLog) {
   return {
     type: "TEAM_FETCH_DATA_SUCCESS",
-    team
+    teamGameLog
   };
 }
 
@@ -109,7 +110,7 @@ export function teamFetchData(baseUrl,teamAbbr) {
         (response) => response.json()
       )
       .then(
-        (items) => dispatch(teamFetchDataSuccess(items)),
+        (data) => dispatch(teamFetchDataSuccess(processData(data.teamgamelogs.gamelogs))),
         (error) => dispatch(teamsHasErrored(true, error))
       );
   };

@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "material-ui/styles";
 import { teamFetchData } from "../../actions/teamActions";
 import { LinearProgress } from "material-ui/Progress";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "Recharts";
 
 const styles = theme => ({
   root: {
@@ -26,7 +27,6 @@ class Team extends Component {
   }
 
 
-
   render() {
 
     if (this.props.hasErrored) {
@@ -38,14 +38,23 @@ class Team extends Component {
     }
 
     return (
-      <div>hii</div>
+      <LineChart width={600} height={300} data={this.props.teamGameLog}
+        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+        <XAxis dataKey="date" />
+        <YAxis />
+        <CartesianGrid strokeDasharray="3 3" />
+        <Tooltip />
+        <Legend />
+        <Line type="monotone" dataKey="goalsFor" stroke="#8884d8" activeDot={{ r: 8 }} />
+        <Line type="monotone" dataKey="goalsAgainst" stroke="#82ca9d" />
+      </LineChart>
     );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    team: state.team,
+    teamGameLog: state.teamGameLog,
     selectedTeam: state.selectedTeam,
     hasErrored: state.teamHasErrored,
     isLoading: state.teamIsLoading

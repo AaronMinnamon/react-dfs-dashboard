@@ -122,10 +122,10 @@ export function teamIsLoading(state = false, action) {
   }
 }
 
-export function team(state = [], action) {
+export function teamGameLog(state = [], action) {
   switch (action.type) {
     case "TEAM_FETCH_DATA_SUCCESS":
-      return action.team;
+      return action.teamGameLog;
 
     default:
       return state;
